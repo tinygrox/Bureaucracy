@@ -7,7 +7,7 @@ namespace Bureaucracy
     {
         public ScienceReport()
         {
-            ReportTitle = "Research Report";
+            ReportTitle = "研究报告"; // Research Report
         }
 
         public override string ReportBody()
