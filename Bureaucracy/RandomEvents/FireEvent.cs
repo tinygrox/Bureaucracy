@@ -8,9 +8,9 @@ namespace Bureaucracy
         public FireEvent()
         {
             facilityToBurn = FacilityManager.Instance.Facilities.ElementAt(Utilities.Instance.Randomise.Next(0, FacilityManager.Instance.Facilities.Count));
-            Title = "Fire!";
-            Body = "Recent cutbacks have resulted in poor safety protocols at " + facilityToBurn.Name + ". As a result, a small fire has gotten out of control";
-            AcceptString = "Oh dear. (" + facilityToBurn.Name + " is destroyed)";
+            Title = "火灾！"; // Fire!
+            Body = "最近的经费削减导致了 " + facilityToBurn.Name + "消防安全性很差. 结果导致了一小撮火焰最终演变成了熊熊大火。"; // 
+            AcceptString = "啊不要啊。 (" + facilityToBurn.Name + "已被摧毁)"; //  is destroyed
             CanBeDeclined = false;
         }
         public override bool EventCanFire()
