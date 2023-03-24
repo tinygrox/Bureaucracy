@@ -83,13 +83,13 @@ namespace Bureaucracy
                 timeStamp++;
                 ut -= homeworld.orbit.period;
             }
-            if(timeStamp >0) return new KeyValuePair<int, string>(timeStamp, "years");
+            if(timeStamp >0) return new KeyValuePair<int, string>(timeStamp, "年"); // "years"
             while (ut > homeworld.solarDayLength)
             {
                 timeStamp++;
                 ut -= homeworld.solarDayLength;
             }
-            return new KeyValuePair<int, string>(timeStamp, "days");
+            return new KeyValuePair<int, string>(timeStamp, "天"); // "days"
         }
 
         public double ConvertMonthlyBudgetToDaily(double amountToConvert)
