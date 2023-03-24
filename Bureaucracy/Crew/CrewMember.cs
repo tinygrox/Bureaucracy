@@ -92,7 +92,7 @@ namespace Bureaucracy
             KerbalRoster.SetExperienceLevel(CrewReference(), newLevel);
             double trainingTime = newLevel * Utilities.Instance.GetMonthLength();
             CrewReference().SetInactive(trainingTime);
-            Utilities.Instance.NewStockAlarm(Name+" - Training", Name+" has completed their training",Planetarium.GetUniversalTime()+trainingTime);
+            Utilities.Instance.NewStockAlarm(Name+" - 培训", Name+" 已经完成他们的培训",Planetarium.GetUniversalTime()+trainingTime); //Training | has completed their training
             Debug.Log("[Bureaucracy]: "+Name+" entered training for "+trainingTime+", new Level: "+newLevel);
         }
 
@@ -129,7 +129,7 @@ namespace Bureaucracy
             ConfigNode[] unhappyNodes = crewConfig.GetNodes("UNHAPPINESS");
             for (int i = 0; i < unhappyNodes.Length; i++)
             {
-                CrewUnhappiness cu = new CrewUnhappiness("loading", this);
+                CrewUnhappiness cu = new CrewUnhappiness("装载", this); // loading
                 cu.OnLoad(unhappyNodes.ElementAt(i));
                 UnhappinessEvents.Add(cu);
                 Unhappy = true;
@@ -138,9 +138,9 @@ namespace Bureaucracy
 
         public string UnhappyOutcome()
         {
-            if (CrewReference().rosterStatus == ProtoCrewMember.RosterStatus.Assigned) return " is not happy but will continue for the sake of the mission";
-            if(UnhappinessEvents.Count >= MaxStrikes) return " Quit the space program due to "+UnhappinessEvents.Last().Reason;
-            return "is not happy due to " + UnhappinessEvents.Last().Reason;
+            if (CrewReference().rosterStatus == ProtoCrewMember.RosterStatus.Assigned) return " 当前心情并不好，但仍会为了任务继续"; // is not happy but will continue for the sake of the mission
+            if(UnhappinessEvents.Count >= MaxStrikes) return " 因为 "+UnhappinessEvents.Last().Reason + " 而退出了太空计划" ;// Quit the space program due to 
+            return "因为 " + UnhappinessEvents.Last().Reason + "而不高兴"; // is not happy due to
         }
 
         public void MonthWithoutIncident()
