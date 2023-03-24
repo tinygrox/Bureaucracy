@@ -43,22 +43,22 @@ namespace Bureaucracy
         {
             CrewMember c = CrewManager.Instance.Kerbals[kerbalName];
             //if for whatever reason we can't find the CrewMember just leave it at default
-            if (c == null) return "Available For Next Mission";
+            if (c == null) return "可以进行下一次任务"; // "Available For Next Mission"
             StringBuilder sb = new StringBuilder();
             // ReSharper disable once Unity.PerformanceCriticalCodeInvocation
-            if (c.CrewReference().inactive) sb.AppendLine( "In Training | " + "Wage: " + c.Wage);
+            if (c.CrewReference().inactive) sb.AppendLine( "训练中 | " + "薪酬：" + c.Wage); // In TrainingWage
             else
             {
                 float morale = (1 - (float) c.UnhappinessEvents.Count / c.MaxStrikes) * 100;
                 if (float.IsNaN(morale)) morale = 100;
                 if (float.IsNegativeInfinity(morale)) morale = 0;
-                sb.AppendLine("Morale: " + Math.Round(morale, 0) + "% | Wage: " + c.Wage);
+                sb.AppendLine("信心：" + Math.Round(morale, 0) + "% | 薪酬：" + c.Wage); // Morale Wage
             }
 
             if (SettingsClass.Instance.RetirementEnabled)
             {
                 KeyValuePair<int, string> retirementDate = Utilities.Instance.ConvertUtToRealTime(c.retirementDate - Planetarium.GetUniversalTime());
-                sb.AppendLine("Retires in " + retirementDate.Key + " " + retirementDate.Value);
+                sb.AppendLine("退役时间：" + retirementDate.Key + " " + retirementDate.Value); // 
             }
 
             return sb.ToString();
