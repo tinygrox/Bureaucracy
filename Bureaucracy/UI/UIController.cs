@@ -120,7 +120,7 @@ namespace Bureaucracy
             dialogElements.Add(new DialogGUIScrollList(new Vector2(300, 300), false, true, vertical));
             dialogElements.Add(GetBoxes("crew"));
             return PopupDialog.SpawnPopupDialog(new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f),
-                new MultiOptionDialog("Bureaucracy", "", "Bureaucracy: Crew Manager", UISkinManager.GetSkin("MainMenuSkin"),
+                new MultiOptionDialog("Bureaucracy", "", "Bureaucracy: 人员管理", UISkinManager.GetSkin("MainMenuSkin"), // Crew Manager
                     new Rect(0.5f, 0.5f, 350, 265), dialogElements.ToArray()), false, UISkinManager.GetSkin("MainMenuSkin"), false);
         }
         
@@ -130,16 +130,16 @@ namespace Bureaucracy
             float trainingFee = newLevel * SettingsClass.Instance.BaseTrainingFee;
             if (crewMember.CrewReference().inactive)
             {
-                ScreenMessages.PostScreenMessage(crewMember.Name + " is already in training");
+                ScreenMessages.PostScreenMessage(crewMember.Name + " 已经在训练中"); // is already in training
                 return;
             }
             if (!Funding.CanAfford(trainingFee))
             {
-                ScreenMessages.PostScreenMessage("Cannot afford training fee of $" + trainingFee);
+                ScreenMessages.PostScreenMessage("无法支付训练费用 $" + trainingFee); // Cannot afford training fee of
                 return;
             }
             Funding.Instance.AddFunds(-trainingFee, TransactionReasons.CrewRecruited);
-            ScreenMessages.PostScreenMessage(crewMember.Name + " in training for " + newLevel + " months");
+            ScreenMessages.PostScreenMessage(crewMember.Name + " 要训练 " + newLevel + " 月"); // months
             crewMember.Train();
         }
 
@@ -150,19 +150,19 @@ namespace Bureaucracy
             List<DialogGUIBase> innerElements = new List<DialogGUIBase>();
             DialogGUIBase[] horizontalArray = new DialogGUIBase[4];
             horizontalArray[0] = new DialogGUISpace(10);
-            horizontalArray[1] = new DialogGUILabel("Budget", MessageStyle(true));
+            horizontalArray[1] = new DialogGUILabel("预算", MessageStyle(true)); // Budget
             horizontalArray[2] = new DialogGUISpace(70);
             horizontalArray[3] = new DialogGUITextInput(fundingAllocation.ToString(), false, 3, s => SetAllocation("Budget", s), 40.0f, 30.0f);
             innerElements.Add(new DialogGUIHorizontalLayout(horizontalArray));
             horizontalArray = new DialogGUIBase[4];
             horizontalArray[0] = new DialogGUISpace(10);
-            horizontalArray[1] = new DialogGUILabel("Construction", MessageStyle(true));
+            horizontalArray[1] = new DialogGUILabel("建造", MessageStyle(true)); // Construction
             horizontalArray[2] = new DialogGUISpace(10);
             horizontalArray[3] = new DialogGUITextInput(constructionAllocation.ToString(), false, 3, s => SetAllocation("Construction", s), 40.0f, 30.0f);
             innerElements.Add(new DialogGUIHorizontalLayout(horizontalArray));
             horizontalArray = new DialogGUIBase[4];
             horizontalArray[0] = new DialogGUISpace(10);
-            horizontalArray[1] = new DialogGUILabel("Research", MessageStyle(true));
+            horizontalArray[1] = new DialogGUILabel("研究", MessageStyle(true)); // Research
             horizontalArray[2] = new DialogGUISpace(45);
             horizontalArray[3] = new DialogGUITextInput(researchAllocation.ToString(), false, 3, s => SetAllocation("Research", s), 40.0f, 30.0f);
             innerElements.Add(new DialogGUIHorizontalLayout(horizontalArray));
@@ -179,13 +179,13 @@ namespace Bureaucracy
             }
             horizontalArray = new DialogGUIBase[2];
             horizontalArray[0] = new DialogGUISpace(10);
-            horizontalArray[1] = new DialogGUIButton("Load Settings", () => SettingsClass.Instance.InGameLoad(), false); 
+            horizontalArray[1] = new DialogGUIButton("载入设置", () => SettingsClass.Instance.InGameLoad(), false);  // Load Settings
             innerElements.Add(new DialogGUIHorizontalLayout(horizontalArray));
             DialogGUIVerticalLayout vertical = new DialogGUIVerticalLayout(innerElements.ToArray());
             dialogElements.Add(new DialogGUIScrollList(-Vector2.one, false, false, vertical));
             dialogElements.Add(GetBoxes("allocation"));
             return PopupDialog.SpawnPopupDialog(new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f),
-                new MultiOptionDialog("Bureaucracy", "", "Bureaucracy: Budget Allocation", UISkinManager.GetSkin("MainMenuSkin"),
+                new MultiOptionDialog("Bureaucracy", "", "Bureaucracy: 预算拨款", UISkinManager.GetSkin("MainMenuSkin"), // Budget Allocation
                     GetRect(dialogElements), dialogElements.ToArray()), false, UISkinManager.GetSkin("MainMenuSkin"), false);
         }
 
@@ -230,40 +230,40 @@ namespace Bureaucracy
             padding = 0;
             List<DialogGUIBase> dialogElements = new List<DialogGUIBase>();
             List<DialogGUIBase> innerElements = new List<DialogGUIBase>();
-            if(HighLogic.CurrentGame.Mode != Game.Modes.CAREER)  innerElements.Add(new DialogGUILabel("Bureaucracy is only available in Career Games"));
+            if(HighLogic.CurrentGame.Mode != Game.Modes.CAREER)  innerElements.Add(new DialogGUILabel("Bureaucracy 只在生涯模式可用")); // is only available in Career Games
             else
             {
                 innerElements.Add(new DialogGUISpace(10));
-                innerElements.Add(new DialogGUIHorizontalLayout(PaddedLabel("Next Budget: " + Utilities.Instance.ConvertUtToKspTimeStamp(BudgetManager.Instance.NextBudget.CompletionTime), false)));
-                innerElements.Add(new DialogGUIHorizontalLayout(PaddedLabel("Gross Budget: $" + Utilities.Instance.GetGrossBudget(), false)));
-                innerElements.Add(new DialogGUIHorizontalLayout(PaddedLabel("Wage Costs: $" + Costs.Instance.GetWageCosts(), false)));
-                innerElements.Add(new DialogGUIHorizontalLayout(PaddedLabel("Facility Maintenance Costs: $" + Costs.Instance.GetFacilityMaintenanceCosts(), false)));
-                innerElements.Add(new DialogGUIHorizontalLayout(PaddedLabel("Launch Costs: $"+Costs.Instance.GetLaunchCosts(), false)));
-                innerElements.Add(new DialogGUIHorizontalLayout(PaddedLabel("Mission Bonuses: $" + GetBonusesToPay(), false)));
+                innerElements.Add(new DialogGUIHorizontalLayout(PaddedLabel("下笔拨款: " + Utilities.Instance.ConvertUtToKspTimeStamp(BudgetManager.Instance.NextBudget.CompletionTime), false))); // 
+                innerElements.Add(new DialogGUIHorizontalLayout(PaddedLabel("总下笔拨款预算: $" + Utilities.Instance.GetGrossBudget(), false))); // GrosNext Budgets Budget
+                innerElements.Add(new DialogGUIHorizontalLayout(PaddedLabel("薪资成本: $" + Costs.Instance.GetWageCosts(), false))); // Wage Costs
+                innerElements.Add(new DialogGUIHorizontalLayout(PaddedLabel("设施维护成本: $" + Costs.Instance.GetFacilityMaintenanceCosts(), false))); // Facility Maintenance Costs
+                innerElements.Add(new DialogGUIHorizontalLayout(PaddedLabel("发射成本: $"+Costs.Instance.GetLaunchCosts(), false))); // Launch Costs
+                innerElements.Add(new DialogGUIHorizontalLayout(PaddedLabel("任务奖励: $" + GetBonusesToPay(), false))); // Mission Bonuses
                 for (int i = 0; i < Bureaucracy.Instance.registeredManagers.Count; i++)
                 {
                     Manager m = Bureaucracy.Instance.registeredManagers.ElementAt(i);
                     if (m.Name == "Budget") continue;
                     double departmentFunding = Math.Round(Utilities.Instance.GetNetBudget(m.Name), 0);
                     if (departmentFunding < 0.0f) continue;
-                    innerElements.Add(new DialogGUIHorizontalLayout(PaddedLabel(m.Name + " Department Funding: $" + departmentFunding, false)));
+                    innerElements.Add(new DialogGUIHorizontalLayout(PaddedLabel(m.Name + " 部门资金: $" + departmentFunding, false))); // Department Funding
                 }
-                innerElements.Add(new DialogGUIHorizontalLayout(PaddedLabel("Net Budget: $"+Utilities.Instance.GetNetBudget("Budget"), false)));
+                innerElements.Add(new DialogGUIHorizontalLayout(PaddedLabel("净值预算: $"+Utilities.Instance.GetNetBudget("Budget"), false))); // Net Budget
                 DialogGUIVerticalLayout vertical = new DialogGUIVerticalLayout(innerElements.ToArray());
                 vertical.AddChild(new DialogGUIContentSizer(widthMode: ContentSizeFitter.FitMode.Unconstrained, heightMode: ContentSizeFitter.FitMode.MinSize));
                 dialogElements.Add(new DialogGUIScrollList(new Vector2(300, 300), false, true, vertical));
                 DialogGUIBase[] horizontal = new DialogGUIBase[6];
-                horizontal[0] = new DialogGUILabel("Allocations: ");
-                horizontal[1] = new DialogGUILabel("Funds: "+fundingAllocation+"%");
+                horizontal[0] = new DialogGUILabel("拨款分配: "); // Allocations
+                horizontal[1] = new DialogGUILabel("资金: "+fundingAllocation+"%"); // 
                 horizontal[2] = new DialogGUILabel("|");
-                horizontal[3] = new DialogGUILabel("Construction: "+constructionAllocation+"%");
+                horizontal[3] = new DialogGUILabel("建造: "+constructionAllocation+"%");  //
                 horizontal[4] = new DialogGUILabel("|");
-                horizontal[5] = new DialogGUILabel("Research: "+researchAllocation+"%");
+                horizontal[5] = new DialogGUILabel("研究: "+researchAllocation+"%"); // 
                 dialogElements.Add(new DialogGUIHorizontalLayout(horizontal));
                 dialogElements.Add(GetBoxes("main"));
             }
             return PopupDialog.SpawnPopupDialog(new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f),
-                new MultiOptionDialog("BureaucracyMain", "", "Bureaucracy: Budget", UISkinManager.GetSkin("MainMenuSkin"),
+                new MultiOptionDialog("BureaucracyMain", "", "Bureaucracy: 预算", UISkinManager.GetSkin("MainMenuSkin"),
                     GetRect(dialogElements), dialogElements.ToArray()), false, UISkinManager.GetSkin("MainMenuSkin"), false);
         }
 
@@ -323,7 +323,7 @@ namespace Bureaucracy
             innerElements.Add(new DialogGUISpace(10));
             float investmentNeeded = 0;
             innerElements.Add(new DialogGUIContentSizer(ContentSizeFitter.FitMode.Unconstrained, ContentSizeFitter.FitMode.PreferredSize, true));
-            innerElements.Add(new DialogGUIHorizontalLayout(PaddedLabel("This Month's Budget: $"+Math.Round(FacilityManager.Instance.ThisMonthsBudget, 0), false)));
+            innerElements.Add(new DialogGUIHorizontalLayout(PaddedLabel("本月预算: $"+Math.Round(FacilityManager.Instance.ThisMonthsBudget, 0), false))); // 
             for (int i = 0; i < FacilityManager.Instance.Facilities.Count; i++)
             {
                 BureaucracyFacility bf = FacilityManager.Instance.Facilities.ElementAt(i);
@@ -334,16 +334,16 @@ namespace Bureaucracy
                 percentage = (float)Math.Round(percentage / bf.Upgrade.OriginalCost * 100,0);
                 innerElements.Add(new DialogGUIHorizontalLayout(PaddedLabel(bf.Name + " "+percentage + "% ($" + bf.Upgrade.RemainingInvestment + " needed)", false)));
             }
-            if (upgradeCount == 0) innerElements.Add(new DialogGUIHorizontalLayout(PaddedLabel("No Facility Upgrades in progress", false)));
+            if (upgradeCount == 0) innerElements.Add(new DialogGUIHorizontalLayout(PaddedLabel("无设施在升级", false))); // No Facility Upgrades in progress
             DialogGUIVerticalLayout vertical = new DialogGUIVerticalLayout(innerElements.ToArray());
             dialogElements.Add(new DialogGUIScrollList(new Vector2(300, 300), false, true, vertical));
             DialogGUIBase[] horizontal = new DialogGUIBase[3];
-            horizontal[0] = new DialogGUILabel("Total Investment Needed: $"+investmentNeeded);
+            horizontal[0] = new DialogGUILabel("所需投资总额: $"+investmentNeeded); // 
             horizontal[1] = new DialogGUILabel("|");
-            horizontal[2] = new DialogGUILabel("Chance of Fire: "+Math.Round(FacilityManager.Instance.FireChance*100, 0)+"%");
+            horizontal[2] = new DialogGUILabel("消防隐患: "+Math.Round(FacilityManager.Instance.FireChance*100, 0)+"%"); // Chance of Fire
             dialogElements.Add(new DialogGUIHorizontalLayout(horizontal));
             dialogElements.Add(GetBoxes("facility"));
-            return PopupDialog.SpawnPopupDialog(new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new MultiOptionDialog("FacilitiesDialog", "", "Bureaucracy: Facilities", UISkinManager.GetSkin("MainMenuSkin"), new Rect(0.5f, 0.5f, 320, 350), dialogElements.ToArray()), false, UISkinManager.GetSkin("MainMenuSkin"));
+            return PopupDialog.SpawnPopupDialog(new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new MultiOptionDialog("FacilitiesDialog", "", "Bureaucracy: 设施", UISkinManager.GetSkin("MainMenuSkin"), new Rect(0.5f, 0.5f, 320, 350), dialogElements.ToArray()), false, UISkinManager.GetSkin("MainMenuSkin"));//Facilities
         }
 
         private PopupDialog DrawResearchUi()
@@ -354,7 +354,7 @@ namespace Bureaucracy
             List<DialogGUIBase> innerElements = new List<DialogGUIBase>();
             innerElements.Add(new DialogGUIContentSizer(ContentSizeFitter.FitMode.Unconstrained, ContentSizeFitter.FitMode.PreferredSize, true));
             innerElements.Add(new DialogGUISpace(10));
-            if(ResearchManager.Instance.ProcessingScience.Count == 0) innerElements.Add(new DialogGUIHorizontalLayout(PaddedLabel("No research in progress", false)));
+            if(ResearchManager.Instance.ProcessingScience.Count == 0) innerElements.Add(new DialogGUIHorizontalLayout(PaddedLabel("无研究在进行", false))); // No research in progress
             for (int i = 0; i < ResearchManager.Instance.ProcessingScience.Count; i++)
             {
                 ScienceEvent se = ResearchManager.Instance.ProcessingScience.ElementAt(i).Value;
@@ -365,13 +365,13 @@ namespace Bureaucracy
 
             dialogElements.Add(new DialogGUIScrollList(new Vector2(300, 300), false, true, new DialogGUIVerticalLayout(10, 100, 4, new RectOffset(6, 24, 10, 10), TextAnchor.UpperLeft, innerElements.ToArray())));
             DialogGUIBase[] horizontal = new DialogGUIBase[3];
-            horizontal[0] = new DialogGUILabel("Processing Science: " + Math.Round(scienceCount, 1));
+            horizontal[0] = new DialogGUILabel("处理中的科学点数: " + Math.Round(scienceCount, 1)); // Processing Science
             horizontal[1] = new DialogGUILabel("|");
             double scienceOutput = ResearchManager.Instance.ThisMonthsBudget / SettingsClass.Instance.ScienceMultiplier * ResearchManager.Instance.ScienceMultiplier;
-            horizontal[2] = new DialogGUILabel("Research Output: "+Math.Round(scienceOutput, 1));
+            horizontal[2] = new DialogGUILabel("研究产出: "+Math.Round(scienceOutput, 1)); // Research Output
             dialogElements.Add(new DialogGUIHorizontalLayout(horizontal));
             dialogElements.Add(GetBoxes("research"));
-            return PopupDialog.SpawnPopupDialog(new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new MultiOptionDialog("ResearchDialog", "", "Bureaucracy: Research", UISkinManager.GetSkin("MainMenuSkin"), GetRect(dialogElements), dialogElements.ToArray()), false, UISkinManager.GetSkin("MainMenuSkin"));
+            return PopupDialog.SpawnPopupDialog(new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new MultiOptionDialog("ResearchDialog", "", "Bureaucracy: 研究", UISkinManager.GetSkin("MainMenuSkin"), GetRect(dialogElements), dialogElements.ToArray()), false, UISkinManager.GetSkin("MainMenuSkin"));//Research
         }
 
         private DialogGUIHorizontalLayout GetBoxes(string passingUi)
@@ -380,30 +380,30 @@ namespace Bureaucracy
             DialogGUIBase[] horizontal = new DialogGUIBase[5];
             if (passingUi != "main")
             {
-                horizontal[arrayPointer] = new DialogGUIButton("Budget", ()=> ActivateUi("main"));
+                horizontal[arrayPointer] = new DialogGUIButton("预算", ()=> ActivateUi("main")); // Budget
                 arrayPointer++;
             }
             if (passingUi != "facility")
             {
-                horizontal[arrayPointer] = new DialogGUIButton("Construction", () => ActivateUi("facility"));
+                horizontal[arrayPointer] = new DialogGUIButton("建造", () => ActivateUi("facility")); // Construction
                 arrayPointer++;
             }
             if (passingUi != "research")
             {
-             horizontal[arrayPointer] = new DialogGUIButton("Research", () => ActivateUi("research"));
+             horizontal[arrayPointer] = new DialogGUIButton("研究", () => ActivateUi("research")); // Research
              arrayPointer++;
             }
             if (passingUi != "allocation")
             {
-                horizontal[arrayPointer] = new DialogGUIButton("Allocation", () => ActivateUi("allocation"));
+                horizontal[arrayPointer] = new DialogGUIButton("拨款", () => ActivateUi("allocation")); // Allocation
                 arrayPointer++;
             }
             if (passingUi != "crew")
             {
-                horizontal[arrayPointer] = new DialogGUIButton("Crew", () => ActivateUi("crew"));
+                horizontal[arrayPointer] = new DialogGUIButton("员工", () => ActivateUi("crew")); //Crew
                 arrayPointer++;
             }
-            horizontal[arrayPointer] = new DialogGUIButton("Close", ValidateAllocations, false);
+            horizontal[arrayPointer] = new DialogGUIButton("关闭", ValidateAllocations, false); // Close
             return new DialogGUIHorizontalLayout(280, 35, horizontal);
         }
 
@@ -417,9 +417,9 @@ namespace Bureaucracy
         private PopupDialog AllocationErrorWindow()
         {
             List<DialogGUIBase> dialogElements = new List<DialogGUIBase>();
-            dialogElements.Add(new DialogGUILabel("Allocations do not add up to 100%"));
+            dialogElements.Add(new DialogGUILabel("拨款总金额未达到 100%")); // Allocations do not add up to 100%
             dialogElements.Add(new DialogGUIButton("OK", () => { }, true));
-            return PopupDialog.SpawnPopupDialog(new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new MultiOptionDialog("AllocationError", "", "Bureaucracy: Error", UISkinManager.GetSkin("MainMenuSkin"), new Rect(0.5f, 0.5f, 200,90), dialogElements.ToArray()), false, UISkinManager.GetSkin("MainMenuSkin"));
+            return PopupDialog.SpawnPopupDialog(new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new MultiOptionDialog("AllocationError", "", "Bureaucracy: 错误", UISkinManager.GetSkin("MainMenuSkin"), new Rect(0.5f, 0.5f, 200,90), dialogElements.ToArray()), false, UISkinManager.GetSkin("MainMenuSkin")); // Error
         }
 
         public void RemoveToolbarButton(GameScenes data)
@@ -436,9 +436,9 @@ namespace Bureaucracy
         public PopupDialog NoHireWindow()
         {
             List<DialogGUIBase> dialogElements = new List<DialogGUIBase>();
-            dialogElements.Add(new DialogGUILabel("Due to reduced staffing levels we are unable to take on any new kerbals at this time"));
+            dialogElements.Add(new DialogGUILabel("由于人员分配减少，我们现在无法承担招募新人的花费")); // Due to reduced staffing levels we are unable to take on any new kerbals at this time
             dialogElements.Add(new DialogGUIButton("OK", () => { }, true));
-            return PopupDialog.SpawnPopupDialog(new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new MultiOptionDialog("NoHire", "", "Can't Hire!", UISkinManager.GetSkin("MainMenuSkin"), new Rect(0.5f, 0.5f, 100, 200), dialogElements.ToArray()), false, UISkinManager.GetSkin("MainMenuSkin"));
+            return PopupDialog.SpawnPopupDialog(new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new MultiOptionDialog("NoHire", "", "无法招募", UISkinManager.GetSkin("MainMenuSkin"), new Rect(0.5f, 0.5f, 100, 200), dialogElements.ToArray()), false, UISkinManager.GetSkin("MainMenuSkin")); // Can't Hire!
         }
         
         public PopupDialog GeneralError(string error)
@@ -446,8 +446,8 @@ namespace Bureaucracy
             List<DialogGUIBase> dialogElements = new List<DialogGUIBase>();
             dialogElements.Add(new DialogGUILabel(error));
             dialogElements.Add(new DialogGUIButton("OK", () => { }, true));
-            return PopupDialog.SpawnPopupDialog(new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new MultiOptionDialog("GeneralErrorDialog", "", "Bureaucracy: Error", UISkinManager.GetSkin("MainMenuSkin"), new Rect(0.5f, 0.5f, 200,200), dialogElements.ToArray()), false, UISkinManager.GetSkin("MainMenuSkin"));
-        }
+            return PopupDialog.SpawnPopupDialog(new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new MultiOptionDialog("GeneralErrorDialog", "", "Bureaucracy: 错误", UISkinManager.GetSkin("MainMenuSkin"), new Rect(0.5f, 0.5f, 200,200), dialogElements.ToArray()), false, UISkinManager.GetSkin("MainMenuSkin")); // 
+        }Error
 
         public void OnSave(ConfigNode cn)
         {
@@ -473,19 +473,19 @@ namespace Bureaucracy
         public PopupDialog NoLaunchesWindow()
         {
             List<DialogGUIBase> dialogElements = new List<DialogGUIBase>();
-            dialogElements.Add(new DialogGUILabel("Due to reduced funding levels, we were unable to afford any fuel"));
+            dialogElements.Add(new DialogGUILabel("因为当前的资金水平，我们买不起燃料了"));  // Due to reduced funding levels, we were unable to afford any fuel
             dialogElements.Add(new DialogGUISpace(20));
-            dialogElements.Add(new DialogGUILabel("No fuel will be available until the end of the month."));
+            dialogElements.Add(new DialogGUILabel("到月底前不会有燃料供应")); // No fuel will be available until the end of the month.
             dialogElements.Add(new DialogGUIButton("OK", () => { }, true));
-            return PopupDialog.SpawnPopupDialog(new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new MultiOptionDialog("NoFuel", "", "No Fuel Available!", UISkinManager.GetSkin("MainMenuSkin"), new Rect(0.5f, 0.5f, 200,160), dialogElements.ToArray()), false, UISkinManager.GetSkin("MainMenuSkin"));
+            return PopupDialog.SpawnPopupDialog(new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new MultiOptionDialog("NoFuel", "", "无燃料可用！", UISkinManager.GetSkin("MainMenuSkin"), new Rect(0.5f, 0.5f, 200,160), dialogElements.ToArray()), false, UISkinManager.GetSkin("MainMenuSkin")); // No Fuel Available!
         }
 
         public PopupDialog KctError()
         {
             List<DialogGUIBase> dialogElements = new List<DialogGUIBase>();
-            dialogElements.Add(new DialogGUILabel("It looks like you have Kerbal Construction Time installed. You should not use KCT's Facility Upgrade and Bureaucracy's Facility Upgrade at the same time. Bad things will happen."));
+            dialogElements.Add(new DialogGUILabel("看来你已安装了Kerbal Construction Time。你不应该同时启用KCT和Bureaucracy的设施升级功能。不好的事情会发生")); // It looks like you have Kerbal Construction Time installed. You should not use KCT's Facility Upgrade and Bureaucracy's Facility Upgrade at the same time. Bad things will happen.
             dialogElements.Add(new DialogGUIButton("OK", () => { }, true));
-            return PopupDialog.SpawnPopupDialog(new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new MultiOptionDialog("KCTError", "", "KCT Detected!", UISkinManager.GetSkin("MainMenuSkin"), new Rect(0.5f, 0.5f, 400,100), dialogElements.ToArray()), false, UISkinManager.GetSkin("MainMenuSkin"));
+            return PopupDialog.SpawnPopupDialog(new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new MultiOptionDialog("KCTError", "", "检测到KCT!", UISkinManager.GetSkin("MainMenuSkin"), new Rect(0.5f, 0.5f, 400,100), dialogElements.ToArray()), false, UISkinManager.GetSkin("MainMenuSkin")); // KCT Detected
         }
 
         private void OnDestroy()
