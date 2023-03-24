@@ -110,10 +110,12 @@ namespace Bureaucracy
                 if (crew.Value.CrewReference().rosterStatus != ProtoCrewMember.RosterStatus.Available) continue;
                 if (crew.Value.CrewReference().inactive) continue;
                 if (crew.Value.CrewReference().experienceLevel >= 5) continue;
-                horizontal = new DialogGUIBase[3];
+                horizontal = new DialogGUIBase[5];
                 horizontal[0] = new DialogGUISpace(10);
                 horizontal[1] = new DialogGUILabel(crew.Key, MessageStyle(true));
-                horizontal[2] = new DialogGUIButton("Train", () => TrainKerbal(crew.Value), false);
+                horizontal[2] = new DialogGUIFlexibleSpace();
+                horizontal[3] = new DialogGUIButton("训练", () => TrainKerbal(crew.Value), false); // Train
+                horizontal[4] = new DialogGUISpace(15);
                 innerElements.Add(new DialogGUIHorizontalLayout(horizontal));
             }
             DialogGUIVerticalLayout vertical = new DialogGUIVerticalLayout(innerElements.ToArray());
@@ -233,7 +235,7 @@ namespace Bureaucracy
             if(HighLogic.CurrentGame.Mode != Game.Modes.CAREER)  innerElements.Add(new DialogGUILabel("Bureaucracy 只在生涯模式可用")); // is only available in Career Games
             else
             {
-                innerElements.Add(new DialogGUISpace(10));
+                innerElements.Add(new DialogGUISpace(10)); // 
                 innerElements.Add(new DialogGUIHorizontalLayout(PaddedLabel("下笔拨款: " + Utilities.Instance.ConvertUtToKspTimeStamp(BudgetManager.Instance.NextBudget.CompletionTime), false))); // 
                 innerElements.Add(new DialogGUIHorizontalLayout(PaddedLabel("总下笔拨款预算: $" + Utilities.Instance.GetGrossBudget(), false))); // GrosNext Budgets Budget
                 innerElements.Add(new DialogGUIHorizontalLayout(PaddedLabel("薪资成本: $" + Costs.Instance.GetWageCosts(), false))); // Wage Costs
@@ -246,7 +248,12 @@ namespace Bureaucracy
                     if (m.Name == "Budget") continue;
                     double departmentFunding = Math.Round(Utilities.Instance.GetNetBudget(m.Name), 0);
                     if (departmentFunding < 0.0f) continue;
-                    innerElements.Add(new DialogGUIHorizontalLayout(PaddedLabel(m.Name + " 部门资金: $" + departmentFunding, false))); // Department Funding
+                    string name = "";
+                    if (m.Name == "Construction")
+                        name = "建造";
+                    else if (m.Name == "Research")
+                        name = "研究";
+                    innerElements.Add(new DialogGUIHorizontalLayout(PaddedLabel(name + " 部门资金: $" + departmentFunding, false))); //m.Name Department Funding
                 }
                 innerElements.Add(new DialogGUIHorizontalLayout(PaddedLabel("净值预算: $"+Utilities.Instance.GetNetBudget("Budget"), false))); // Net Budget
                 DialogGUIVerticalLayout vertical = new DialogGUIVerticalLayout(innerElements.ToArray());
@@ -332,7 +339,7 @@ namespace Bureaucracy
                 investmentNeeded += bf.Upgrade.RemainingInvestment;
                 float percentage = bf.Upgrade.OriginalCost - bf.Upgrade.RemainingInvestment;
                 percentage = (float)Math.Round(percentage / bf.Upgrade.OriginalCost * 100,0);
-                innerElements.Add(new DialogGUIHorizontalLayout(PaddedLabel(bf.Name + " "+percentage + "% ($" + bf.Upgrade.RemainingInvestment + " needed)", false)));
+                innerElements.Add(new DialogGUIHorizontalLayout(PaddedLabel(bf.Name + " "+percentage + "% ($" + bf.Upgrade.RemainingInvestment + " 需要)", false))); // 
             }
             if (upgradeCount == 0) innerElements.Add(new DialogGUIHorizontalLayout(PaddedLabel("无设施在升级", false))); // No Facility Upgrades in progress
             DialogGUIVerticalLayout vertical = new DialogGUIVerticalLayout(innerElements.ToArray());
@@ -436,7 +443,7 @@ namespace Bureaucracy
         public PopupDialog NoHireWindow()
         {
             List<DialogGUIBase> dialogElements = new List<DialogGUIBase>();
-            dialogElements.Add(new DialogGUILabel("由于人员分配减少，我们现在无法承担招募新人的花费")); // Due to reduced staffing levels we are unable to take on any new kerbals at this time
+            dialogElements.Add(new DialogGUILabel("由于减少了雇员预算，我们现在无法承担招募新人的花费")); // Due to reduced staffing levels we are unable to take on any new kerbals at this time
             dialogElements.Add(new DialogGUIButton("OK", () => { }, true));
             return PopupDialog.SpawnPopupDialog(new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new MultiOptionDialog("NoHire", "", "无法招募", UISkinManager.GetSkin("MainMenuSkin"), new Rect(0.5f, 0.5f, 100, 200), dialogElements.ToArray()), false, UISkinManager.GetSkin("MainMenuSkin")); // Can't Hire!
         }
