@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Linq;
 using JetBrains.Annotations;
 using KSP.UI.Screens;
+using Steamworks;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -115,7 +116,7 @@ namespace Bureaucracy
                 horizontal[1] = new DialogGUILabel(crew.Key, MessageStyle(true));
                 horizontal[2] = new DialogGUIFlexibleSpace();
                 horizontal[3] = new DialogGUIButton("训练", () => TrainKerbal(crew.Value), false); // Train
-                horizontal[4] = new DialogGUISpace(15);
+                horizontal[4] = new DialogGUISpace(20);
                 innerElements.Add(new DialogGUIHorizontalLayout(horizontal));
             }
             DialogGUIVerticalLayout vertical = new DialogGUIVerticalLayout(innerElements.ToArray());
@@ -150,23 +151,26 @@ namespace Bureaucracy
             padding = 0;
             List<DialogGUIBase> dialogElements = new List<DialogGUIBase>();
             List<DialogGUIBase> innerElements = new List<DialogGUIBase>();
-            DialogGUIBase[] horizontalArray = new DialogGUIBase[4];
+            DialogGUIBase[] horizontalArray = new DialogGUIBase[5];
             horizontalArray[0] = new DialogGUISpace(10);
             horizontalArray[1] = new DialogGUILabel("预算", MessageStyle(true)); // Budget
-            horizontalArray[2] = new DialogGUISpace(70);
+            horizontalArray[2] = new DialogGUIFlexibleSpace();// DialogGUISpace(70);
             horizontalArray[3] = new DialogGUITextInput(fundingAllocation.ToString(), false, 3, s => SetAllocation("Budget", s), 40.0f, 30.0f);
+            horizontalArray[4] = new DialogGUISpace(20);
             innerElements.Add(new DialogGUIHorizontalLayout(horizontalArray));
-            horizontalArray = new DialogGUIBase[4];
+            horizontalArray = new DialogGUIBase[5];
             horizontalArray[0] = new DialogGUISpace(10);
             horizontalArray[1] = new DialogGUILabel("建造", MessageStyle(true)); // Construction
-            horizontalArray[2] = new DialogGUISpace(10);
+            horizontalArray[2] = new DialogGUIFlexibleSpace();// DialogGUISpace(10);
             horizontalArray[3] = new DialogGUITextInput(constructionAllocation.ToString(), false, 3, s => SetAllocation("Construction", s), 40.0f, 30.0f);
+            horizontalArray[4] = new DialogGUISpace(20);
             innerElements.Add(new DialogGUIHorizontalLayout(horizontalArray));
-            horizontalArray = new DialogGUIBase[4];
+            horizontalArray = new DialogGUIBase[5];
             horizontalArray[0] = new DialogGUISpace(10);
             horizontalArray[1] = new DialogGUILabel("研究", MessageStyle(true)); // Research
-            horizontalArray[2] = new DialogGUISpace(45);
+            horizontalArray[2] = new DialogGUIFlexibleSpace();//DialogGUISpace(45);
             horizontalArray[3] = new DialogGUITextInput(researchAllocation.ToString(), false, 3, s => SetAllocation("Research", s), 40.0f, 30.0f);
+            horizontalArray[4] = new DialogGUISpace(20);
             innerElements.Add(new DialogGUIHorizontalLayout(horizontalArray));
             for (int i = 0; i < Bureaucracy.Instance.registeredManagers.Count; i++)
             {
@@ -175,13 +179,21 @@ namespace Bureaucracy
                 if (Utilities.Instance.GetNetBudget(m.Name) == -1.0f) continue;
                 horizontalArray = new DialogGUIBase[3];
                 horizontalArray[0] = new DialogGUISpace(10);
-                horizontalArray[1] = new DialogGUILabel(m.Name+": ");
+                string name = "";
+                if (m.Name == "Budget")
+                    name = "预算";
+                else if (m.Name == "Construction")
+                    name = "建造";
+                else if (m.Name == "Research")
+                    name = "研究";
+                horizontalArray[1] = new DialogGUILabel(name + ": ");//m.Name
                 horizontalArray[2] = new DialogGUILabel(() => ShowFunding(m));
                 innerElements.Add(new DialogGUIHorizontalLayout(horizontalArray));
             }
-            horizontalArray = new DialogGUIBase[2];
+            horizontalArray = new DialogGUIBase[3];
             horizontalArray[0] = new DialogGUISpace(10);
             horizontalArray[1] = new DialogGUIButton("载入设置", () => SettingsClass.Instance.InGameLoad(), false);  // Load Settings
+            horizontalArray[2] = new DialogGUISpace(10);
             innerElements.Add(new DialogGUIHorizontalLayout(horizontalArray));
             DialogGUIVerticalLayout vertical = new DialogGUIVerticalLayout(innerElements.ToArray());
             dialogElements.Add(new DialogGUIScrollList(-Vector2.one, false, false, vertical));
@@ -235,9 +247,9 @@ namespace Bureaucracy
             if(HighLogic.CurrentGame.Mode != Game.Modes.CAREER)  innerElements.Add(new DialogGUILabel("Bureaucracy 只在生涯模式可用")); // is only available in Career Games
             else
             {
-                innerElements.Add(new DialogGUISpace(10)); // 
+                innerElements.Add(new DialogGUISpace(10));
                 innerElements.Add(new DialogGUIHorizontalLayout(PaddedLabel("下笔拨款: " + Utilities.Instance.ConvertUtToKspTimeStamp(BudgetManager.Instance.NextBudget.CompletionTime), false))); // 
-                innerElements.Add(new DialogGUIHorizontalLayout(PaddedLabel("总下笔拨款预算: $" + Utilities.Instance.GetGrossBudget(), false))); // GrosNext Budgets Budget
+                innerElements.Add(new DialogGUIHorizontalLayout(PaddedLabel("下笔拨款总预算: $" + Utilities.Instance.GetGrossBudget(), false))); // GrosNext Budgets Budget
                 innerElements.Add(new DialogGUIHorizontalLayout(PaddedLabel("薪资成本: $" + Costs.Instance.GetWageCosts(), false))); // Wage Costs
                 innerElements.Add(new DialogGUIHorizontalLayout(PaddedLabel("设施维护成本: $" + Costs.Instance.GetFacilityMaintenanceCosts(), false))); // Facility Maintenance Costs
                 innerElements.Add(new DialogGUIHorizontalLayout(PaddedLabel("发射成本: $"+Costs.Instance.GetLaunchCosts(), false))); // Launch Costs
