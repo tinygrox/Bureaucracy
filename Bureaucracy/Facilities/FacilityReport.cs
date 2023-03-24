@@ -9,7 +9,7 @@ namespace Bureaucracy
     {
         public FacilityReport()
         {
-            ReportTitle = "Facilities Report";
+            ReportTitle = "设施报告"; // Facilities Report
         }
 
         public override string ReportBody()
@@ -19,12 +19,12 @@ namespace Bureaucracy
             {
                 BureaucracyFacility bf = FacilityManager.Instance.Facilities.ElementAt(i);
                 string s = bf.GetProgressReport(bf.Upgrade);
-                if (bf.IsClosed) ReportBuilder.AppendLine(bf.Name + " is closed");
+                if (bf.IsClosed) ReportBuilder.AppendLine(bf.Name + " 已关闭"); // is closed
                 if(s == String.Empty) continue;
                 ReportBuilder.AppendLine(s);
             }
             string report = ReportBuilder.ToString();
-            if (String.IsNullOrEmpty(report)) report = "No Facility updates to report";
+            if (String.IsNullOrEmpty(report)) report = "无设施升级报告"; // No Facility updates to report
             return report;
         }
     }
