@@ -43,7 +43,7 @@ namespace Bureaucracy
             if (remainingFunding > 0)
             {
                 OnEventCompleted();
-                ScreenMessages.PostScreenMessage(parentFacility.Name + ": Upgrade Complete");
+                ScreenMessages.PostScreenMessage(parentFacility.Name + ": 升级完成"); // Upgrade Complete
                 return  (float)remainingFunding;
             }
             remainingInvestment -= (float)funding;
@@ -75,12 +75,12 @@ namespace Bureaucracy
         private PopupDialog GenerateKctWarning(int facilityLevel)
         {
             List<DialogGUIBase> dialogElements = new List<DialogGUIBase>();
-            dialogElements.Add(new DialogGUILabel("Facility level doesn't match requested upgrade!"));
-            dialogElements.Add(new DialogGUILabel("Expected a level "+levelRequested+" "+parentFacility.Name+" - Got level "+(facilityLevel+1)));
-            dialogElements.Add(new DialogGUILabel("If KCT is installed, make sure you have the right launchpad selected"));
-            dialogElements.Add(new DialogGUILabel("When you are ready, right click the launchpad and click \"Upgrade\" to proceed"));
-            dialogElements.Add(new DialogGUIButton("OK", () => { }, true));
-            return PopupDialog.SpawnPopupDialog(new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new MultiOptionDialog("ResearchDialog", "", "Bureaucracy: Research", UISkinManager.GetSkin("MainMenuSkin"), new Rect(0.5f, 0.5f, 200, 200), dialogElements.ToArray()), false, UISkinManager.GetSkin("MainMenuSkin"));
+            dialogElements.Add(new DialogGUILabel("设施级别与升级申请的级别不匹配！")); // Facility level doesn't match requested upgrade!
+            dialogElements.Add(new DialogGUILabel("申请升级到 "+levelRequested+" "+parentFacility.Name+" -  当前级别为 "+(facilityLevel+1))); // Expected a level Got level
+            dialogElements.Add(new DialogGUILabel("如果安装了KCT，请确认你已切换到了正确的发射台")); // If KCT is installed, make sure you have the right launchpad selected
+            dialogElements.Add(new DialogGUILabel("准备完成时，右键点击发射台然后按下“升级”继续")); // When you are ready, right click the launchpad and click \"Upgrade\" to proceed
+            dialogElements.Add(new DialogGUIButton("OK", () => { }, true)); // 
+            return PopupDialog.SpawnPopupDialog(new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new MultiOptionDialog("ResearchDialog", "", "Bureaucracy: 研究", UISkinManager.GetSkin("MainMenuSkin"), new Rect(0.5f, 0.5f, 200, 200), dialogElements.ToArray()), false, UISkinManager.GetSkin("MainMenuSkin")); // Research
         }
 
         public void OnSave(ConfigNode facilityNode)
