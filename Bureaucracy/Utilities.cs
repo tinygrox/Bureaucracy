@@ -160,7 +160,7 @@ namespace Bureaucracy
                 universalTimeStamp -= FlightGlobals.GetHomeBody().solarDayLength;
             }
 
-            return "Y" + years + " D" + days;
+            return   years + "年"+ days + "天" ;
         }
 
         //Used for RandomEvents, grabs a relevant Kerbal.
