@@ -75,17 +75,17 @@ namespace Bureaucracy
             List<DialogGUIBase> dialogElements = new List<DialogGUIBase>();
             List<DialogGUIBase> innerElements = new List<DialogGUIBase>();
             innerElements.Add(new DialogGUIImage(new Vector2(300, 147), new Vector2(0, 0), Color.gray, GameDatabase.Instance.GetTexture("Bureaucracy/Mortimer", false)));
-            innerElements.Add(new DialogGUILabel(() => "Bank Balance: " + Math.Round(balance, 0)));
+            innerElements.Add(new DialogGUILabel(() => "银行余额：" + Math.Round(balance, 0))); // "Bank Balance: "
             innerElements.Add(new DialogGUITextInput(playerInput.ToString(), false, 30, s => SetPlayerInput(s), 300.0f, 30.0f));
             DialogGUIBase[] horizontal = new DialogGUIBase[3];
-            horizontal[0] = new DialogGUIButton("Deposit", () => DepositFunds(playerInput), false);
-            horizontal[1] = new DialogGUIButton("Withdraw", () => WithdrawFunds(playerInput), false);
-            horizontal[2] = new DialogGUIButton("Close", null, true);
+            horizontal[0] = new DialogGUIButton("提款", () => DepositFunds(playerInput), false); // "Deposit"
+            horizontal[1] = new DialogGUIButton("存钱", () => WithdrawFunds(playerInput), false); // "Withdraw"
+            horizontal[2] = new DialogGUIButton("关闭", null, true); // "Close"
             innerElements.Add(new DialogGUIHorizontalLayout(horizontal));
             DialogGUIVerticalLayout vertical = new DialogGUIVerticalLayout(innerElements.ToArray());
             dialogElements.Add(vertical);
             return PopupDialog.SpawnPopupDialog(new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f),
-                new MultiOptionDialog("Bureaucracy", "", "Bank of "+FlightGlobals.GetHomeBody().bodyName, UISkinManager.GetSkin("MainMenuSkin"),
+                new MultiOptionDialog("Bureaucracy", "", FlightGlobals.GetHomeBody().displayName + "的银行", UISkinManager.GetSkin("MainMenuSkin"), //"Bank of "+FlightGlobals.GetHomeBody().bodyName
                     new Rect(0.5f, 0.5f, 350, 265), dialogElements.ToArray()), false, UISkinManager.GetSkin("MainMenuSkin"), false);
         }
 
