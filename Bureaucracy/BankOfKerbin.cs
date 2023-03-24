@@ -78,8 +78,8 @@ namespace Bureaucracy
             innerElements.Add(new DialogGUILabel(() => "银行余额：" + Math.Round(balance, 0))); // "Bank Balance: "
             innerElements.Add(new DialogGUITextInput(playerInput.ToString(), false, 30, s => SetPlayerInput(s), 300.0f, 30.0f));
             DialogGUIBase[] horizontal = new DialogGUIBase[3];
-            horizontal[0] = new DialogGUIButton("提款", () => DepositFunds(playerInput), false); // "Deposit"
-            horizontal[1] = new DialogGUIButton("存钱", () => WithdrawFunds(playerInput), false); // "Withdraw"
+            horizontal[0] = new DialogGUIButton("存入", () => DepositFunds(playerInput), false); // "Deposit"
+            horizontal[1] = new DialogGUIButton("取出", () => WithdrawFunds(playerInput), false); // "Withdraw"
             horizontal[2] = new DialogGUIButton("关闭", null, true); // "Close"
             innerElements.Add(new DialogGUIHorizontalLayout(horizontal));
             DialogGUIVerticalLayout vertical = new DialogGUIVerticalLayout(innerElements.ToArray());
