@@ -95,7 +95,7 @@ namespace Bureaucracy
                 if (kvp.Value.retirementDate > Planetarium.GetUniversalTime()) continue;
                 Debug.Log("[Bureaucracy]: " + kvp.Value.Name + " has retired");
                 HighLogic.CurrentGame.CrewRoster.Remove(kvp.Value.CrewReference());
-                ScreenMessages.PostScreenMessage("[Bureaucracy]: " + kvp.Key + " has retired");
+                ScreenMessages.PostScreenMessage("[Bureaucracy]: " + kvp.Key + "已退役"); //  has retired
                 Retirees.Add(kvp.Key);
                 Kerbals.Remove(kvp.Value.Name);
             }
@@ -116,7 +116,7 @@ namespace Bureaucracy
                 int bonusToProcess = c.GetBonus(clearBonuses);
                 if (clearBonuses && bonusToProcess > 0 && availableFunding < bonusToProcess)
                 {
-                    c.AddUnhappiness("not being paid");
+                    c.AddUnhappiness("没有薪水"); // "not being paid"
                 }
                 else bonus += bonusToProcess;
                 availableFunding -= bonus;
@@ -144,7 +144,7 @@ namespace Bureaucracy
             for ( int i = 0; i < unpaidKerbals.Count; i++)
             {
                 CrewMember c = Kerbals.ElementAt(i).Value;
-                c.AddUnhappiness("not being paid");
+                c.AddUnhappiness("没有薪水"); // "not being paid"
                 Debug.Log("[Bureaucracy]: Adding new unpaid crew member "+c.Name);
             }
         }
@@ -180,7 +180,7 @@ namespace Bureaucracy
                 if(Utilities.Instance.Randomise.NextDouble() < c.CrewReference().courage) continue;
                 string lostVessel = crewMember.name;
                 if (CrewOnValidVessel(crewMember)) lostVessel = crewMember.seat.vessel.vesselName;
-                c.AddUnhappiness("Loss of "+lostVessel);
+                c.AddUnhappiness(lostVessel + "已损毁");  // "Loss of "+lostVessel
                 Debug.Log("[Bureaucracy]: Unhappiness event registered for "+crewMember.name+": Dead Kerbal");
             }
             float penalty = Reputation.Instance.reputation * (SettingsClass.Instance.DeadKerbalPenalty / 100.0f);
