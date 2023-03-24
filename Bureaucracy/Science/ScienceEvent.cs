@@ -64,7 +64,7 @@ namespace Bureaucracy
         public override void OnEventCompleted()
         {
             IsComplete = true;
-            ScreenMessages.PostScreenMessage(UiName + ": Research Complete");
+            ScreenMessages.PostScreenMessage(UiName + ": 研究完成"); // Research Complete
             Debug.Log("[Bureaucracy]: Science Event "+UiName+" completed");
             InformParent();
         }
