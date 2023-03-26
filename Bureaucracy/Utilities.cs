@@ -146,21 +146,22 @@ namespace Bureaucracy
         //Turns UniversalTime into KSP date format "Y1 D1"
         public string ConvertUtToKspTimeStamp(double universalTimeStamp)
         {
-            int years = 1;
-            int days = 1;
-            while (universalTimeStamp > FlightGlobals.GetHomeBody().orbit.period)
-            {
-                years++;
-                universalTimeStamp -= FlightGlobals.GetHomeBody().orbit.period;
-            }
+            // int years = 1;
+            // int days = 1;
+            // while (universalTimeStamp > FlightGlobals.GetHomeBody().orbit.period)
+            // {
+            //     years++;
+            //     universalTimeStamp -= FlightGlobals.GetHomeBody().orbit.period;
+            // }
 
-            while (universalTimeStamp > FlightGlobals.GetHomeBody().solarDayLength)
-            {
-                days++;
-                universalTimeStamp -= FlightGlobals.GetHomeBody().solarDayLength;
-            }
+            // while (universalTimeStamp > FlightGlobals.GetHomeBody().solarDayLength)
+            // {
+            //     days++;
+            //     universalTimeStamp -= FlightGlobals.GetHomeBody().solarDayLength;
+            // }
 
-            return   years + "年"+ days + "天" ;
+            // return   years + "年"+ days + "天" ;
+            return KSPUtil.dateTimeFormatter.PrintDateCompact(universalTimeStamp, true);
         }
 
         //Used for RandomEvents, grabs a relevant Kerbal.

@@ -69,7 +69,7 @@ namespace Bureaucracy
             {
                 try
                 {
-                    if (thisAlarm.title.Equals("Next Budget"))
+                    if (thisAlarm.title.Equals("下笔拨款")) // Next Budget
                     {
                         return false;
                     }
