@@ -342,8 +342,6 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>
-      bash /home/martin/Documents/BureaucracyDebug.sh
-      bash "/home/martin/Documents/BureaucracyRelease.sh"
     </PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

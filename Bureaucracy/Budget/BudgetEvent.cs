@@ -12,7 +12,7 @@ namespace Bureaucracy
         {
             MonthLength = SettingsClass.Instance.TimeBetweenBudgets;
             CompletionTime = budgetTime;
-            Name = "Next Budget";
+            Name = "Next Budget"; // "就是你"
             ParentManager = manager;
             if(newKacAlarm) Utilities.Instance.NewStockAlarm("Next Budget", "Next Budget", CompletionTime);
             StopTimewarpOnCompletion = true;
