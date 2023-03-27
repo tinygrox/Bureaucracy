@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine.Diagnostics;
 using Random = System.Random;
 
 namespace Bureaucracy
@@ -83,7 +84,7 @@ namespace Bureaucracy
                 timeStamp++;
                 ut -= homeworld.orbit.period;
             }
-            if(timeStamp >0) return new KeyValuePair<int, string>(timeStamp, "年"); // "years"
+            if (timeStamp > 0) return new KeyValuePair<int, string>(timeStamp, "年"); // "years"
             while (ut > homeworld.solarDayLength)
             {
                 timeStamp++;

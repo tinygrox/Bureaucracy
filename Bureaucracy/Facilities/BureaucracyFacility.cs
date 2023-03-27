@@ -151,9 +151,9 @@ namespace Bureaucracy
         {
             // ReSharper disable once BuiltInTypeReferenceStyleForMemberAccess
             if (!Upgrading && !recentlyUpgraded) return String.Empty;
-            if (!recentlyUpgraded) return Name + ": $" + (upgrade.OriginalCost-upgrade.RemainingInvestment) + " / " + upgrade.OriginalCost;
+            if (!recentlyUpgraded) return Localizer.Format("#Bureaucracy_" + Name.Replace(" ", "")) + ": $" + (upgrade.OriginalCost-upgrade.RemainingInvestment) + " / " + upgrade.OriginalCost;
             recentlyUpgraded = false;
-            return Name + ": 已成功完成升级"; // Upgrade completed successfully
+            return Localizer.Format("#Bureaucracy_" + Name) + ": 已成功完成升级"; // Upgrade completed successfully
         }
 
         public void OnLoad(ConfigNode[] facilityNodes)

@@ -17,7 +17,7 @@ namespace Bureaucracy
             {
                 ScienceEvent se = ResearchManager.Instance.CompletedEvents.ElementAt(i);
                 float processedScience = se.OriginalScience;
-                ReportBuilder.AppendLine(se.UiName + ": " + Math.Round(processedScience, 1) + "/" + se.OriginalScience);
+                ReportBuilder.AppendLine(se.UiName + ": " + Math.Round(processedScience, 1) + "/" + Math.Round(se.OriginalScience, 1));
             }
             for (int i = 0; i < ResearchManager.Instance.ProcessingScience.Count; i++)
             {
