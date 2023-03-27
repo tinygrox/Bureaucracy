@@ -20,9 +20,9 @@ namespace Bureaucracy
             ReportBuilder.AppendLine("任务奖励：" + CrewManager.Instance.LastBonus); // "Mission Bonuses: "
             ReportBuilder.AppendLine("建设部门：" + FacilityManager.Instance.GetAllocatedFunding()); // "Construction Department: "
             ReportBuilder.AppendLine("研发部门：" + ResearchManager.Instance.GetAllocatedFunding()); // "Research Department: "
-            double netBudget = Utilities.Instance.GetNetBudget("预算"); // Budget
+            double netBudget = Utilities.Instance.GetNetBudget("Budget");
             ReportBuilder.AppendLine("净值预算：" + Math.Max(0, netBudget)); // "Net Budget: "
-            if (netBudget > 0 && netBudget < Funding.Instance.Funds) ReportBuilder.AppendLine("我们认为没有理由加大你的预算"); // "We can't justify extending your funding"
+            if (netBudget > 0 && netBudget < Funding.Instance.Funds) ReportBuilder.AppendLine("我们认为没有理由增加你的预算"); // "We can't justify extending your funding"
             // ReSharper disable once InvertIf
             if (netBudget < 0)
             {
