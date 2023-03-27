@@ -31,9 +31,6 @@ namespace Bureaucracy
         private PopupDialog researchWindow;
         public PopupDialog allocationWindow;
         public PopupDialog crewWindow;
-        private int fundingAllocation;
-        private int constructionAllocation;
-        private int researchAllocation;
         [UsedImplicitly] public PopupDialog errorWindow;
         private int padding;
         private const int PadFactor = 10;
@@ -50,16 +47,13 @@ namespace Bureaucracy
 
         private void Start()
         {
-            //SetAllocation("Budget", "40");
-            //SetAllocation("Research", "30");
-            //SetAllocation("Construction", "30");
             GameEvents.onGUIApplicationLauncherReady.Add(SetupToolbarButton);
             GameEvents.onGUIApplicationLauncherUnreadifying.Add(RemoveToolbarButton);
         }
 
         private int GetAllocation(Manager manager)
         {
-            return (int)Math.Round((double)(manager.FundingAllocation * 100f), 0);
+            return (int)Math.Round((manager.FundingAllocation*100), 0);
         }
 
 
@@ -225,13 +219,12 @@ namespace Bureaucracy
             switch (managerName)
             {
                 case "Budget":
-                    fundingAllocation = i;
-                    break;
+                    return GetAllocation(BudgetManager.Instance).ToString(CultureInfo.CurrentCulture);
                 case "Research":
-                    researchAllocation = i;
+                    return GetAllocation(ResearchManager.Instance).ToString(CultureInfo.CurrentCulture);
                     break;
                 case "Construction":
-                    constructionAllocation = i;
+                    return GetAllocation(FacilityManager.Instance).ToString(CultureInfo.CurrentCulture);
                     break;
             }
 
@@ -281,11 +274,11 @@ namespace Bureaucracy
                 dialogElements.Add(new DialogGUIScrollList(new Vector2(300, 300), false, true, vertical));
                 DialogGUIBase[] horizontal = new DialogGUIBase[6];
                 horizontal[0] = new DialogGUILabel("拨款分配: "); // Allocations
-                horizontal[1] = new DialogGUILabel("资金: "+fundingAllocation+"%"); // 
+                horizontal[1] = new DialogGUILabel("资金: "+GetAllocation(BudgetManager.Instance)+"%");
                 horizontal[2] = new DialogGUILabel("|");
-                horizontal[3] = new DialogGUILabel("建造: "+constructionAllocation+"%");  //
+                horizontal[3] = new DialogGUILabel("建造: "+GetAllocation(FacilityManager.Instance)+"%");
                 horizontal[4] = new DialogGUILabel("|");
-                horizontal[5] = new DialogGUILabel("研究: "+researchAllocation+"%"); // 
+                horizontal[5] = new DialogGUILabel("研究: "+GetAllocation(ResearchManager.Instance)+"%");
                 dialogElements.Add(new DialogGUIHorizontalLayout(horizontal));
                 dialogElements.Add(GetBoxes("main"));
             }
@@ -436,8 +429,10 @@ namespace Bureaucracy
 
         public void ValidateAllocations()
         {
-            int allocations = fundingAllocation + constructionAllocation + researchAllocation;
-            if (allocations != 100) errorWindow = AllocationErrorWindow();
+            int allocations = GetAllocation(BudgetManager.Instance);
+            allocations += GetAllocation(ResearchManager.Instance);
+            allocations+=  + GetAllocation(FacilityManager.Instance);
+            if (allocations <99.9 || allocations >100.1) errorWindow = AllocationErrorWindow();
             else DismissAllWindows();
         }
 
@@ -475,27 +470,7 @@ namespace Bureaucracy
             dialogElements.Add(new DialogGUIButton("OK", () => { }, true));
             return PopupDialog.SpawnPopupDialog(new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new MultiOptionDialog("GeneralErrorDialog", "", "Bureaucracy: 错误", UISkinManager.GetSkin("MainMenuSkin"), new Rect(0.5f, 0.5f, 200,200), dialogElements.ToArray()), false, UISkinManager.GetSkin("MainMenuSkin")); // Error
         }
-        public void OnSave(ConfigNode cn)
-        {
-            ConfigNode uiNode = new ConfigNode("UI");
-            uiNode.SetValue("FundingAllocation", fundingAllocation, true);
-            uiNode.SetValue("ResearchAllocation", researchAllocation, true);
-            uiNode.SetValue("ConstructionAllocation", constructionAllocation, true);
-            cn.AddNode(uiNode);
-        }
-
-        public void OnLoad(ConfigNode cn)
-        {
-            ConfigNode uiNode = cn.GetNode("UI");
-            if (uiNode == null) return;
-            int.TryParse(uiNode.GetValue("FundingAllocation"), out fundingAllocation);
-            SetAllocation("Budget", fundingAllocation.ToString());
-            int.TryParse(uiNode.GetValue("ResearchAllocation"), out researchAllocation);
-            SetAllocation("Research", researchAllocation.ToString());
-            int.TryParse(uiNode.GetValue("ConstructionAllocation"), out constructionAllocation);
-            SetAllocation("Construction", constructionAllocation.ToString());
-        }
-
+        
         public PopupDialog NoLaunchesWindow()
         {
             List<DialogGUIBase> dialogElements = new List<DialogGUIBase>();
