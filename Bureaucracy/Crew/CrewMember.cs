@@ -49,7 +49,8 @@ namespace Bureaucracy
         {
             KeyValuePair<int, string> kvp = Utilities.Instance.ConvertUtToRealTime(timeOnMission);
             double payout;
-            if (kvp.Value == "years") payout = kvp.Key * SettingsClass.Instance.LongTermBonusYears;
+            // if (kvp.Value == "years") payout = kvp.Key * SettingsClass.Instance.LongTermBonusYears;
+            if (kvp.Value == "年") payout = kvp.Key * SettingsClass.Instance.LongTermBonusYears;
             else payout = kvp.Key * SettingsClass.Instance.LongTermBonusDays;
             bonusAwaitingPayment += payout;
             Debug.Log("[Bureaucracy]: Assigned Bonus of "+(int)payout+" to "+Name);
