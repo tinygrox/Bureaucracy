@@ -50,11 +50,16 @@ namespace Bureaucracy
 
         private void Start()
         {
-            SetAllocation("Budget", "40");
-            SetAllocation("Research", "30");
-            SetAllocation("Construction", "30");
+            //SetAllocation("Budget", "40");
+            //SetAllocation("Research", "30");
+            //SetAllocation("Construction", "30");
             GameEvents.onGUIApplicationLauncherReady.Add(SetupToolbarButton);
             GameEvents.onGUIApplicationLauncherUnreadifying.Add(RemoveToolbarButton);
+        }
+
+        private int GetAllocation(Manager manager)
+        {
+            return (int)Math.Round((double)(manager.FundingAllocation * 100f), 0);
         }
 
 
@@ -155,21 +160,24 @@ namespace Bureaucracy
             horizontalArray[0] = new DialogGUISpace(10);
             horizontalArray[1] = new DialogGUILabel("预算", MessageStyle(true)); // Budget
             horizontalArray[2] = new DialogGUIFlexibleSpace();// DialogGUISpace(70);
-            horizontalArray[3] = new DialogGUITextInput(fundingAllocation.ToString(), false, 3, s => SetAllocation("Budget", s), 40.0f, 30.0f);
+            // horizontalArray[3] = new DialogGUITextInput( fundingAllocation.ToString(), false, 3, s => SetAllocation("Budget", s), 40.0f, 30.0f);
+            horizontalArray[3] = new DialogGUITextInput(GetAllocation(BudgetManager.Instance).ToString(), false, 3, s => SetAllocation("Budget", s), 40.0f, 30.0f);
             horizontalArray[4] = new DialogGUISpace(20);
             innerElements.Add(new DialogGUIHorizontalLayout(horizontalArray));
             horizontalArray = new DialogGUIBase[5];
             horizontalArray[0] = new DialogGUISpace(10);
             horizontalArray[1] = new DialogGUILabel("建造", MessageStyle(true)); // Construction
             horizontalArray[2] = new DialogGUIFlexibleSpace();// DialogGUISpace(10);
-            horizontalArray[3] = new DialogGUITextInput(constructionAllocation.ToString(), false, 3, s => SetAllocation("Construction", s), 40.0f, 30.0f);
+            //horizontalArray[3] = new DialogGUITextInput(constructionAllocation.ToString(), false, 3, s => SetAllocation("Construction", s), 40.0f, 30.0f);
+            horizontalArray[3] = new DialogGUITextInput(GetAllocation(FacilityManager.Instance).ToString(), false, 3, s => SetAllocation("Construction", s), 40.0f, 30.0f);
             horizontalArray[4] = new DialogGUISpace(20);
             innerElements.Add(new DialogGUIHorizontalLayout(horizontalArray));
             horizontalArray = new DialogGUIBase[5];
             horizontalArray[0] = new DialogGUISpace(10);
             horizontalArray[1] = new DialogGUILabel("研究", MessageStyle(true)); // Research
             horizontalArray[2] = new DialogGUIFlexibleSpace();//DialogGUISpace(45);
-            horizontalArray[3] = new DialogGUITextInput(researchAllocation.ToString(), false, 3, s => SetAllocation("Research", s), 40.0f, 30.0f);
+            //horizontalArray[3] = new DialogGUITextInput(researchAllocation.ToString(), false, 3, s => SetAllocation("Research", s), 40.0f, 30.0f);
+            horizontalArray[3] = new DialogGUITextInput(GetAllocation(ResearchManager.Instance).ToString(), false, 3, s => SetAllocation("Research", s), 40.0f, 30.0f);
             horizontalArray[4] = new DialogGUISpace(20);
             innerElements.Add(new DialogGUIHorizontalLayout(horizontalArray));
             for (int i = 0; i < Bureaucracy.Instance.registeredManagers.Count; i++)
