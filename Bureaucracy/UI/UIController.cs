@@ -439,7 +439,7 @@ namespace Bureaucracy
         private PopupDialog AllocationErrorWindow()
         {
             List<DialogGUIBase> dialogElements = new List<DialogGUIBase>();
-            dialogElements.Add(new DialogGUILabel("拨款总金额未达到 100%")); // Allocations do not add up to 100%
+            dialogElements.Add(new DialogGUILabel("拨款分配总额加起来不等于100%")); // Allocations do not add up to 100%
             dialogElements.Add(new DialogGUIButton("OK", () => { }, true));
             return PopupDialog.SpawnPopupDialog(new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new MultiOptionDialog("AllocationError", "", "Bureaucracy: 错误", UISkinManager.GetSkin("MainMenuSkin"), new Rect(0.5f, 0.5f, 200,90), dialogElements.ToArray()), false, UISkinManager.GetSkin("MainMenuSkin")); // Error
         }
