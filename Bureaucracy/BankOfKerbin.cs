@@ -85,7 +85,7 @@ namespace Bureaucracy
             DialogGUIVerticalLayout vertical = new DialogGUIVerticalLayout(innerElements.ToArray());
             dialogElements.Add(vertical);
             return PopupDialog.SpawnPopupDialog(new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f),
-                new MultiOptionDialog("Bureaucracy", "", FlightGlobals.GetHomeBody().displayName + "的银行", UISkinManager.GetSkin("MainMenuSkin"), //"Bank of "+FlightGlobals.GetHomeBody().bodyName
+                new MultiOptionDialog("Bureaucracy", "", FlightGlobals.GetHomeBodyDisplayName().LocalizeRemoveGender() + "的银行", UISkinManager.GetSkin("MainMenuSkin"), //"Bank of "+FlightGlobals.GetHomeBody().bodyName
                     new Rect(0.5f, 0.5f, 350, 265), dialogElements.ToArray()), false, UISkinManager.GetSkin("MainMenuSkin"), false);
         }
 
