@@ -1,6 +1,7 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using KSP.Localization;
 
 namespace Bureaucracy
 {
@@ -19,7 +20,7 @@ namespace Bureaucracy
             {
                 BureaucracyFacility bf = FacilityManager.Instance.Facilities.ElementAt(i);
                 string s = bf.GetProgressReport(bf.Upgrade);
-                if (bf.IsClosed) ReportBuilder.AppendLine(bf.Name + " 已停止运营"); // is closed
+                if (bf.IsClosed) ReportBuilder.AppendLine(Localizer.Format("#Bureaucracy_" + bf.Name) + " 已停止运营"); // is closed
                 if(s == String.Empty) continue;
                 ReportBuilder.AppendLine(s);
             }

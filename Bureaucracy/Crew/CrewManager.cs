@@ -52,7 +52,8 @@ namespace Bureaucracy
                 CrewMember c = Kerbals.ElementAt(i).Value;
                 c.MonthWithoutIncident();
             }
-            if(SettingsClass.Instance.RetirementEnabled)ProcessRetirees();
+            if(SettingsClass.Instance.RetirementEnabled)
+                ProcessRetirees();
             Debug.Log("[Bureaucracy]: Crew Processed");
         }
 

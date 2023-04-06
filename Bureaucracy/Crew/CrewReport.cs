@@ -14,7 +14,8 @@ namespace Bureaucracy
         {
             ReportBuilder.Clear();
             Dictionary<CrewMember, string> unhappyCrew = CrewManager.Instance.UnhappyCrewOutcomes;
-            if (unhappyCrew.Count == 0) return "员工状态良好"; // No Crew Issues
+            if (unhappyCrew.Count == 0) 
+                ReportBuilder.AppendLine("员工状态良好"); // No Crew Issues
             for (int i = 0; i < unhappyCrew.Count; i++)
             {
                 KeyValuePair<CrewMember, string> unhappyCrewMember = unhappyCrew.ElementAt(i);

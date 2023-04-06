@@ -143,7 +143,7 @@ namespace Bureaucracy
         {
             Upgrade = new FacilityUpgradeEvent(facilityToUpgrade.id, this);
             Upgrading = true;
-            ScreenMessages.PostScreenMessage($"[Bureaucracy]: 对 {Name} 设施的升级申请已提交"); // Upgrade of " + Name + " requested
+            ScreenMessages.PostScreenMessage($"[Bureaucracy]: 对 {Localizer.Format("#Bureaucracy_" + Name)} 设施的升级申请已提交"); // Upgrade of " + Name + " requested
             Debug.Log("[Bureaucracy]: Upgrade of " + Name + " requested for " + Upgrade.OriginalCost);
         }
 
@@ -245,7 +245,7 @@ namespace Bureaucracy
             Upgrading = false;
             IsPriority = false;
             Debug.Log("[Bureaucracy]: Upgrade of "+Name+" cancelled");
-            ScreenMessages.PostScreenMessage("[Bureaucracy]: " + Name + " - 撤回升级申请"); // Upgrade cancelled
+            ScreenMessages.PostScreenMessage("[Bureaucracy]: " + Localizer.Format("#Bureaucracy_" + Name) + " - 撤回升级申请"); // Upgrade cancelled
         }
     }
 }

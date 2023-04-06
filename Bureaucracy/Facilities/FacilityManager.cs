@@ -4,6 +4,7 @@ using System.Linq;
 using JetBrains.Annotations;
 using UnityEngine;
 using Upgradeables;
+using KSP.Localization;
 
 namespace Bureaucracy
 {
@@ -134,7 +135,7 @@ namespace Bureaucracy
             if (facilityToUpgrade.IsDestroyed())
             {
                 Debug.Log("[Bureaucracy]: " + facility.id + " is destroyed. Aborting upgrade");
-                ScreenMessages.PostScreenMessage("[Bureaucracy]:  无法升级" + facilityToUpgrade.Name + " 建筑已被摧毁"); // Can't upgradeBuilding is destroyed
+                ScreenMessages.PostScreenMessage("[Bureaucracy]:  无法升级" + Localizer.Format("#Bureaucracy_" + facilityToUpgrade.Name ) + " 建筑已被摧毁"); // Can't upgradeBuilding is destroyed
                 return;
             }
 
@@ -152,7 +153,7 @@ namespace Bureaucracy
                 }
                 Debug.Log("[Bureaucracy]: " + facility.id + " is already being upgraded. Prioritising");
                 SetPriority(facilityToUpgrade, true);
-                ScreenMessages.PostScreenMessage("优先升级 " + facilityToUpgrade.Name + " 建筑"); // Upgrade of prioritised
+                ScreenMessages.PostScreenMessage("优先升级 " + Localizer.Format("#Bureaucracy_" + facilityToUpgrade.Name) + " 建筑"); // Upgrade of prioritised
                 return;
             }
 
@@ -162,7 +163,7 @@ namespace Bureaucracy
         private PopupDialog DrawWarningDialog(BureaucracyFacility facility)
         {
             List<DialogGUIBase> dialogElements = new List<DialogGUIBase>();
-            dialogElements.Add(new DialogGUILabel("对 "+facility.Name+" 的升级申请将会被撤销。 "+(facility.Upgrade.OriginalCost-facility.Upgrade.RemainingInvestment+"将会损失。 你确定吗?"))); // Upgrade of
+            dialogElements.Add(new DialogGUILabel("对 "+Localizer.Format("#Bureaucracy_" + facility.Name)+" 的升级申请将会被撤销。 "+(facility.Upgrade.OriginalCost-facility.Upgrade.RemainingInvestment+"将会损失。 你确定吗?"))); // Upgrade of
             dialogElements.Add(new DialogGUIButton("是", facility.CancelUpgrade, true)); // Yes
             dialogElements.Add(new DialogGUIButton("否", () => { }, true)); // No
             return PopupDialog.SpawnPopupDialog(new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new MultiOptionDialog("CancelUpgradeDialog", "", "Bureaucracy: 撤回升级申请", UISkinManager.GetSkin("MainMenuSkin"), new Rect(0.5f, 0.5f, 210, 100), dialogElements.ToArray()), false, UISkinManager.GetSkin("MainMenuSkin")); // Bureaucracy: Cancel Upgrade
